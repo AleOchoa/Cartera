@@ -48,7 +48,7 @@ app.use(logger('dev'));
 
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/auth'));
-app.use('/', require('./routes/contratos'));
+app.use('/contrato', require('./routes/contratos'));
 app.use('/cliente', require('./routes/cliente'));
 
 // Uncomment this line for production

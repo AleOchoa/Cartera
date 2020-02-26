@@ -9,12 +9,14 @@ const contractSchema = new Schema(
       type:String,
       unique:true
     },
-    tabla:Array,
+    tablaOriginal:Array,
+    tablaActual:Array,
     cliente:{
       type: Schema.Types.ObjectId,
       ref: 'Client'
     },
-    fechaInicio:Date
+    fechaInicio:Date,
+    diaPago:Number
   },
   {
     timestamps: true,

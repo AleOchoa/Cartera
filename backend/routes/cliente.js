@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Client = require('../models/Client')
 
-router.get('/clientes',async (req,res)=>{
+router.get('/',async (req,res)=>{
         const clientes= await Client.find()
         res.status(200).json({clientes})
     })
