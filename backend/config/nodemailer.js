@@ -17,12 +17,12 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-exports.confirmAccount = async (to,key,name, endpoint) => {
-  obj={email:to,password:key,name:name,endpoint:endpoint}
+exports.confirmAccount = async (to,key,name) => {
+  obj={email:to,password:key,name:name}
     return await transporter.sendMail({
       from: "'Emisha' <contacto@emisha.com>",
       to,
-      subject: 'Crea tu cuenta - Emisha',
+      subject: 'Bienvenido a Emisha',
       html: welcomeTemplate({obj})
     })
 }

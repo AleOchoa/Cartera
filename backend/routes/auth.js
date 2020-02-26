@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const User = require('../models/User');
 const passport = require('../config/passport');
 const {confirmAccount}=require('../config/nodemailer')
@@ -18,7 +17,7 @@ router.post('/signup', async (req, res, next) => {
    await User.register({name,email,token}, password)
     .then(async (user) =>{ 
       const endpoint = `https://localhost:3001/${token}`
-      await confirmAccount(email,password,name,endpoint).catch(err=>console.log(err)
+      await confirmAccount(email,password,name).catch(err=>console.log(err)
       )
       res.status(201).json({ user })})
     .catch((err) => res.status(500).json({ err }));
