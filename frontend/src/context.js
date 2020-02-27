@@ -1,6 +1,7 @@
-import React, { Component, createContext } from 'react'
+import React, { createContext, Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import SERVICE from './services/index'
+import AUTH_SERVICE from './services/index'
+import axios from 'axios'
 
 export const MyContext = createContext()
 
@@ -15,109 +16,84 @@ class MyProvider extends Component {
       email: '',
       password: ''
     },
-    isLoggedIn: false,
-    msg: 'Landing page'
+    loggedUser: null,
+    isLogged: false,
+    isOpen: false,
+    feed: null
   }
 
-  handleSignupInput = e => {
+  handleInput = (e, obj) => {
     const { name, value } = e.target
-    this.setState(prevState => ({
-      ...prevState,
-      formSignup: {
-        ...prevState.formSignup,
-        [name]: value
-      }
-    }))
+    obj[name] = value
+    this.setState({ obj })
+    //onChange={(e) => handleInput(e, 'formSignup')}
   }
 
-  handleLoginInput = e => {
-    const { name, value } = e.target
-    this.setState(prevState => ({
-      ...prevState,
-      formLogin: {
-        ...prevState.formLogin,
-        [name]: value
-      }
-    }))
+  async componentDidMount() {
+    //const { data } = await axios.get('https://api.imgflip.com/get_memes')
+    //const { memes } = await AUTH_SERVICE.FEED()
+    //this.setState({ meme_templates: data.data.memes, feed: memes })
   }
 
-  handleSignupSubmit = e => {
+
+  onClose = () => {
+    this.setState({ isOpen: false })
+  }
+
+
+  handleLogout = async () => {
+    await AUTH_SERVICE.LOGOUT()
+    this.props.history.push('/')
+    this.setState({ loggedUser: null, isLogged: false })
+  }
+
+  handleSignupSubmit = async e => {
     e.preventDefault()
-    const { name, email, password } = this.state.formSignup
-    SERVICE.signup({ name, email, password })
-      .then(({ data }) => {
-        this.setState(prevState => ({
-          ...prevState,
-          formSignup: {
-            name: '',
-            email: '',
-            password: ''
-          }
-        }))
-        alert(':)')
-        this.props.history.push('/login')
-      })
-      .catch(() => {
-        alert(':(, chaleee')
-      })
-  }
-
-  handleFile = e => {
-    // const changes = {
-    //   name: 'asdad',
-    // }
-
-    // for (const key in changes) {
-    //   formData.append(key, changes[key])
-    // }
-    const formData = new FormData()
-    formData.append('photoURL', e.target.files[0])
-    SERVICE.uploadPhoto(formData)
-      .then(({ data }) => {
-        this.setState({ loggedUser: data.user })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    const form = this.state.formSignup
+    this.setState({ formSignup: { name: '', email: '', password: '' } })
+    return await AUTH_SERVICE.SIGNUP(form)
   }
 
   handleLoginSubmit = e => {
     e.preventDefault()
-    const { email, password } = this.state.formLogin
-    SERVICE.login({ email, password })
-      .then(({ data }) => {
-        this.setState(prevState => ({
-          ...prevState,
-          formLogin: {
-            email: '',
-            password: ''
-          },
-          loggedUser: data.user,
-          isLoggedIn: true
-        }))
-        this.props.history.push('/profile')
+    const form = this.state.formLogin
+    return AUTH_SERVICE.LOGIN(form)
+      .then(({ user }) => {
+        this.setState({
+          loggedUser: user,
+          isLogged: true
+        })
+        return { user, msg: 'logged' }
       })
-      .catch(() => {
-        alert(':(, chaleee')
+      .catch(err => {
+        this.setState({
+          loggedUser: null,
+          isLogged: false,
+          formLogin: { email: '', password: '' }
+        })
+        return { user: null, msg: 'Invalid username/password.' }
       })
+      .finally(() => this.setState({ formLogin: { email: '', password: '' } }))
   }
 
   render() {
     const {
       state,
-      handleSignupInput,
+      handleInput,
       handleSignupSubmit,
-      handleLoginInput,
-      handleLoginSubmit
+      handleLoginSubmit,
+      handleLogout,
+      onClose
     } = this
     return (
       <MyContext.Provider
         value={{
           state,
-          handleSignupInput,
+          handleInput,
           handleSignupSubmit,
-          handleLoginInput,
-          handleLoginSubmit
+          handleLoginSubmit,
+          handleLogout,
+          onClose
         }}
       >
         {this.props.children}
