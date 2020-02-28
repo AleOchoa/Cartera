@@ -9,8 +9,7 @@ class MyProvider extends Component {
   state = {
     formSignup: {
       name: '',
-      email: '',
-      password: ''
+      email: ''
     },
     formLogin: {
       email: '',
@@ -50,8 +49,11 @@ class MyProvider extends Component {
   handleSignupSubmit = async e => {
     e.preventDefault()
     const form = this.state.formSignup
-    this.setState({ formSignup: { name: '', email: '', password: '' } })
-    return await AUTH_SERVICE.SIGNUP(form)
+    this.setState({ formSignup: { name: '', email: ''} })
+    return await AUTH_SERVICE.signup(form)
+    .then(({data})=>{
+      return {user:data.user,msg:"Se ha mandado un correo al usuario."}})
+    .catch(({err})=>{return {user:null,msg:"La cuenta ya existe."}})
   }
 
   handleLoginSubmit = e => {

@@ -25,7 +25,7 @@ export default function Login({ history }) {
       {context => {
         return (
           <>
-            <Box as="form" onSubmit={submit} marginTop="20vh" display="flex" h="60%" justifyContent="center" w="100%" p={4} color="white">
+            <Box as="form" onSubmit={submit} marginTop="10vh" display="flex" h="60%" justifyContent="center" w="100%" p={4} color="white">
               <Stack width="40%" minWidth="300px" >
                 <Heading as="h2" color="teal.700">Ingresa a tu cuenta</Heading>
                 <InputGroup>
