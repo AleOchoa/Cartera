@@ -21,7 +21,6 @@ function Navbar({ history }) {
             pos="fixed"
             top={0}
             zIndex="99"
-            backgroundColor="white"
             w="100vw"
             h="10vh"
             p={8}
@@ -42,7 +41,6 @@ function Navbar({ history }) {
               <MenuList>
                 {!context.state.isLogged && (
                   <>
-                    <MenuItem onClick={() => go('/')}>Home</MenuItem>
                     <MenuItem onClick={() => go('/')}>Login</MenuItem>
                     <MenuItem onClick={() => go('/signup')}>Signup</MenuItem>
                   </>

@@ -23,7 +23,7 @@ router.post('/signup', async (req, res, next) => {
     .catch((err) => res.status(500).json({ err }));
 });
 
-router.post('/changePassword',async(req,res)=>{
+router.patch('/changePassword',async(req,res)=>{
 const {newPassword}=req.body
 const {email}=req.user;
 await User.findByUsername(email).then(async (changeUser)=>{

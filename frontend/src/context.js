@@ -1,7 +1,7 @@
 import React, { createContext, Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import AUTH_SERVICE from './services/index'
-import axios from 'axios'
+//import axios from 'axios'
 
 export const MyContext = createContext()
 
@@ -24,9 +24,9 @@ class MyProvider extends Component {
 
   handleInput = (e, obj) => {
     const { name, value } = e.target
-    obj[name] = value
-    this.setState({ obj })
-    //onChange={(e) => handleInput(e, 'formSignup')}
+    let Obj=this.state[obj]
+    Obj[name] = value
+    this.setState({ Obj })
   }
 
   async componentDidMount() {
@@ -42,7 +42,7 @@ class MyProvider extends Component {
 
 
   handleLogout = async () => {
-    await AUTH_SERVICE.LOGOUT()
+    await AUTH_SERVICE.logOut()
     this.props.history.push('/')
     this.setState({ loggedUser: null, isLogged: false })
   }
@@ -57,13 +57,13 @@ class MyProvider extends Component {
   handleLoginSubmit = e => {
     e.preventDefault()
     const form = this.state.formLogin
-    return AUTH_SERVICE.LOGIN(form)
-      .then(({ user }) => {
+    return AUTH_SERVICE.login(form)
+      .then(( {data} ) => {
         this.setState({
-          loggedUser: user,
+          loggedUser: data.user,
           isLogged: true
         })
-        return { user, msg: 'logged' }
+        return { user:data.user, msg: 'Login realizado' }
       })
       .catch(err => {
         this.setState({
@@ -71,7 +71,7 @@ class MyProvider extends Component {
           isLogged: false,
           formLogin: { email: '', password: '' }
         })
-        return { user: null, msg: 'Invalid username/password.' }
+        return { user: null, msg: 'Email/contraseña inválidos.' }
       })
       .finally(() => this.setState({ formLogin: { email: '', password: '' } }))
   }
