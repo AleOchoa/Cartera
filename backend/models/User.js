@@ -11,10 +11,9 @@ const userSchema = new Schema(
       default:'Mesa'
     },
     token:String,
-    estatus:{
-      type:String,
-      enum:['Active','Inactive','Blocked'],
-      default:'Inactive'
+    isActive:{
+      type:Boolean,
+      default:true
     }
   },
   {

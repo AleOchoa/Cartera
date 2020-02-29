@@ -10,6 +10,7 @@ import {
   IconButton
 } from '@chakra-ui/core'
 import { MyContext } from '../context'
+import { TiThMenu } from "react-icons/ti";
 
 function Navbar({ history }) {
   const go = path => history.push(path)
@@ -36,7 +37,8 @@ function Navbar({ history }) {
                 variantColor="whity"
                 aria-label="Menu"
                 size="lg"
-                icon="menu"
+                icon={TiThMenu}
+                border="none"
               ></MenuButton>
               <MenuList>
                 {!context.state.isLogged && (

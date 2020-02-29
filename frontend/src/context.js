@@ -1,6 +1,6 @@
 import React, { createContext, Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import AUTH_SERVICE from './services/index'
+import SERVICE from './services/index'
 //import axios from 'axios'
 
 export const MyContext = createContext()
@@ -18,7 +18,10 @@ class MyProvider extends Component {
     loggedUser: null,
     isLogged: false,
     isOpen: false,
-    feed: null
+    allUsers: null,
+    allContracts:null,
+    allClients:null,
+    feed:false
   }
 
   handleInput = (e, obj) => {
@@ -29,19 +32,22 @@ class MyProvider extends Component {
   }
 
   async componentDidMount() {
-    //const { data } = await axios.get('https://api.imgflip.com/get_memes')
-    //const { memes } = await AUTH_SERVICE.FEED()
-    //this.setState({ meme_templates: data.data.memes, feed: memes })
+    const data=await SERVICE.feedAll()
+    this.setState({feed:true,allUsers:data.users,allContracts:data.contracts,allClients:data.clients})
   }
-
 
   onClose = () => {
     this.setState({ isOpen: false })
   }
-
+  deleteUser=async (e,id)=>{
+    console.log(id)
+    await SERVICE.deleteUser(id)
+    
+    this.setState()
+  }
 
   handleLogout = async () => {
-    await AUTH_SERVICE.logOut()
+    await SERVICE.logOut()
     this.props.history.push('/')
     this.setState({ loggedUser: null, isLogged: false })
   }
@@ -50,8 +56,10 @@ class MyProvider extends Component {
     e.preventDefault()
     const form = this.state.formSignup
     this.setState({ formSignup: { name: '', email: ''} })
-    return await AUTH_SERVICE.signup(form)
-    .then(({data})=>{
+    return await SERVICE.signup(form)
+    .then(async({data})=>{
+      const {users}=await SERVICE.feedUsers()
+      this.setState({allUsers:users})
       return {user:data.user,msg:"Se ha mandado un correo al usuario."}})
     .catch(({err})=>{return {user:null,msg:"La cuenta ya existe."}})
   }
@@ -59,7 +67,7 @@ class MyProvider extends Component {
   handleLoginSubmit = e => {
     e.preventDefault()
     const form = this.state.formLogin
-    return AUTH_SERVICE.login(form)
+    return SERVICE.login(form)
       .then(( {data} ) => {
         this.setState({
           loggedUser: data.user,
@@ -85,7 +93,8 @@ class MyProvider extends Component {
       handleSignupSubmit,
       handleLoginSubmit,
       handleLogout,
-      onClose
+      onClose,
+      deleteUser
     } = this
     return (
       <MyContext.Provider
@@ -95,7 +104,8 @@ class MyProvider extends Component {
           handleSignupSubmit,
           handleLoginSubmit,
           handleLogout,
-          onClose
+          onClose,
+          deleteUser
         }}
       >
         {this.props.children}

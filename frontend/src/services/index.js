@@ -19,6 +19,29 @@ const MY_SERVICE = {
   },
   logOut: async () => {
     return await service.get('/logout');
+  },
+  feedAll: async()=>{
+    const users= await service.get('/usuarios')
+    const clients= await service.get('/cliente')
+    const contracts= await service.get('/contrato')
+    return {users:users.data.users,contracts:contracts.data.contratos,clients:clients.data.clientes}
+  },
+  feedUsers: async()=>{
+    const users= await service.get('/usuarios')
+    return {users:users.data.users}
+  },
+  feedClients: async()=>{
+    const clients= await service.get('/cliente')
+    return {clients:clients.data.clientes}
+  },
+  feedContracts: async()=>{
+    const contracts= await service.get('/contrato')
+    return {contracts:contracts.data.contratos}
+  },
+  deleteUser: async(e,id)=>{
+    console.log(id)
+    const msg=await service.delete(`/borraUsuario/${id}`)
+    return {msg}
   }
 };
 

@@ -3,6 +3,15 @@ const User = require('../models/User');
 const passport = require('../config/passport');
 const {confirmAccount}=require('../config/nodemailer')
 
+router.get('/usuarios',async(req,res)=>{
+  const users=await User.find()
+  res.status(200).json({users})
+})
+router.delete('/borraUsuario/:id',async (req,res)=>{
+  const {id}=req.params
+  await User.findByIdAndDelete(id)
+  res.status(200).json({msg:"Usuario borrado."})
+}) 
 router.post('/signup', async (req, res, next) => {
   const {name,email}=req.body
   const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
