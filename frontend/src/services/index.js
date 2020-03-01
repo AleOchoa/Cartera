@@ -38,8 +38,7 @@ const MY_SERVICE = {
     const contracts= await service.get('/contrato')
     return {contracts:contracts.data.contratos}
   },
-  deleteUser: async(e,id)=>{
-    console.log(id)
+  deleteUser: async(id)=>{
     const msg=await service.delete(`/borraUsuario/${id}`)
     return {msg}
   }

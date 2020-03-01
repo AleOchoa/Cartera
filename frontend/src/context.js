@@ -40,10 +40,9 @@ class MyProvider extends Component {
     this.setState({ isOpen: false })
   }
   deleteUser=async (e,id)=>{
-    console.log(id)
     await SERVICE.deleteUser(id)
-    
-    this.setState()
+    const data= await SERVICE.feedUsers()
+    this.setState({allUsers:data.users})
   }
 
   handleLogout = async () => {
