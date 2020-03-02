@@ -11,7 +11,24 @@ router.delete('/borraUsuario/:id',async (req,res)=>{
   const {id}=req.params
   await User.findByIdAndDelete(id)
   res.status(200).json({msg:"Usuario borrado."})
-}) 
+})
+
+router.patch('/editaUsuario/:id', async (req,res)=>{
+  const {name,email,rol}=req.body
+  const {id}=req.params
+  const user= await User.findByIdAndUpdate(id,{name,email,rol},{new:true})
+    .catch(err=>res.status(500).json(err))
+  res.status(200).json({user})
+})
+router.patch(`/cambiaEstatus/:id`, async (req,res)=>{
+  const {id}=req.params
+  const user= await User.findOne({_id:id})
+    .catch(err=>res.status(500).json(err))
+  user.isActive=!user.isActive
+  user.save()
+  res.status(200).json({user})
+})
+
 router.post('/signup', async (req, res, next) => {
   const {name,email}=req.body
   const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

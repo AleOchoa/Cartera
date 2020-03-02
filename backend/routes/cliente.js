@@ -10,4 +10,5 @@ router.get('/',async (req,res)=>{
         const cliente= await Client.create({nombre,apellidoPaterno,apellidoMaterno,numCliente})
         res.status(201).json({cliente})
     })
+    
 module.exports= router

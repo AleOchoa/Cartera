@@ -41,6 +41,14 @@ const MY_SERVICE = {
   deleteUser: async(id)=>{
     const msg=await service.delete(`/borraUsuario/${id}`)
     return {msg}
+  },
+  editUser:async (id,form)=>{
+    const user=await service.patch(`/editaUsuario/${id}`,form)
+    return {user}
+  },
+  changeStatus:async (id)=>{
+    const user=await service.patch(`/cambiaEstatus/${id}`)
+    return{user}
   }
 };
 
