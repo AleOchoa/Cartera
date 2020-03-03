@@ -18,6 +18,22 @@ router.get('/',async (req,res)=>{
             fechaInicio,diaPago,cliente:idcliente})
         res.status(201).json({ contrato })
     })
+    .delete('/borra/:id',async (req,res)=>{
+        const {id}=req.params
+        await Contract.findByIdAndDelete(id)
+        res.status(200).json({msg:"Contrato borrado."})
+      })
+      
+    .patch('/edita/:id', async (req,res)=>{
+        const {monto,plazo,tasa,diaPago,estatus}=req.body
+        const {id}=req.params
+        const contrato= await Contract.findById(id)
+        const fecha=contrato.fechaInicio.toISOString().substring(0,10)
+        const tabla= creaTabla(monto,plazo,tasa,fecha,diaPago)
+        const contract= await Contract.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla,},{new:true})
+          .catch(err=>res.status(500).json(err))
+        res.status(200).json({contract})
+      })
 
 function creaTabla(monto,plazo,tasa,fechaInicio,diaPago){
     const residual=0 //por el momento el residual siempre será cero

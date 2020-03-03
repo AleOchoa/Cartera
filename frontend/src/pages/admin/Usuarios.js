@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext,useEffect} from 'react';
 import {Select,Link,List,ListIcon,ListItem,Flex,Box,Heading,Button,Stack,InputGroup,InputLeftAddon,Input,Icon,useToast, SimpleGrid,Text } from "@chakra-ui/core";
 import {MyContext} from '../../context'
 import { MdBlock,MdEdit,MdVpnKey} from 'react-icons/md';
@@ -7,6 +7,9 @@ import { FaUser} from 'react-icons/fa';
 
 export default function Usuarios({history}) {  
     const context = useContext(MyContext)
+    useEffect(()=>{
+      if (!context.state.isLogged) return history.push('/')
+    })
     const toast = useToast()
     const {feed,edita,nuevo}= context.state
     const submitUser = async (e) => {
@@ -129,7 +132,7 @@ export default function Usuarios({history}) {
                             <Text gridColumn="10/11" >{user.rol}</Text>
                             <Link onClick={(e)=>{showEdit(e,user)} }><Box margin="auto" as={MdEdit}/></Link>
                             <Link onClick={(e)=>{deleteUser(e,user._id)} }><Icon margin="auto" name="delete"/></Link>
-                            <Link onClick={(e)=>{restorePassword(e,user._id)} }><Box margin="auto" as={MdVpnKey}/></Link>
+                            <Link color="gray.400" onClick={(e)=>{restorePassword(e,user._id)} }><Box margin="auto" as={MdVpnKey}/></Link>
                           </SimpleGrid>
                           </ListItem>
 

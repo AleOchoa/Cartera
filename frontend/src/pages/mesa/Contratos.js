@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext,useEffect} from 'react';
 import {Select,Link,List,ListItem,Flex,Box,Heading,Button,Stack,Input,Icon,useToast, SimpleGrid,Text,InputLeftAddon, InputGroup } from "@chakra-ui/core";
 import {MyContext} from '../../context'
 import { FaPlusCircle} from 'react-icons/fa';
@@ -7,6 +7,9 @@ import { MdEdit} from 'react-icons/md';
 export default function Contratos({history}) {  
     const context = useContext(MyContext)
     const toast = useToast()
+    useEffect(()=>{
+      if (!context.state.isLogged) return history.push('/')
+    })
     const {feed,edita,nuevo}= context.state
     const submitContract = async (e) => {
         const {contract,msg}= await context.createContract(e)     
@@ -38,13 +41,16 @@ export default function Contratos({history}) {
       await context.editContract(e,contract)
     }
     const showEdit=async(e,contract)=>{
-      await context.showEditUser(e,contract)
+      await context.showEditContract(e,contract)
     }
     const showNuevo=async(e)=>{
       await context.showNuevo(e)
     }
     const handleChange=async(e)=>{
       await context.handleChange(e,'formContrato')
+    }
+    const showDetail=async(e,contract)=>{
+      await context.showDetailContract(e,contract)
     }
     
     return (
@@ -93,15 +99,34 @@ export default function Contratos({history}) {
                   </Stack>
                 </Box>}
                 {edita && <Box as="form" onSubmit={(e)=>editContract(e,context.state.formContrato.id)} display="flex" h="60%" justifyContent="center" minWidth="350px" w="25vw"  p={4} color="white">
-                  <Stack >
-                    <Heading as="h3" size="md" color="teal.700">Editar</Heading>
-                      <Input name="name" value={context.state.formContrato.name} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" type="text" rounded="0" placeholder="nombre de usuario" isRequired/>
-                      <Input name="email" value={context.state.formContrato.email} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" type="email" roundedLeft="0" placeholder="email@emisha.com.mx" isRequired/>
-                    <Select color="teal.700" name="rol" onChange={(e)=>handleChange(e)} value={context.state.formUsuario.rol}>
-                      <option value="Mesa">Mesa</option>
-                      <option value="Admin">Admin</option>
+                <Stack >
+                    <Heading as="h3" size="md" color="teal.700">Agrega un contrato</Heading>
+
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Monto" color="teal.700" />
+                    <Input placeholder="Monto" name="monto" type="number" value={context.state.formContrato.monto} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Plazo" color="teal.700" />
+                    <Input placeholder="Plazo" name="plazo" type="number" value={context.state.formContrato.plazo} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Tasa" color="teal.700" />
+                    <Input placeholder="Tasa" name="tasa" type="number" value={context.state.formContrato.tasa} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup display="flex" flexDirection="row" height="fit-content">
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Día pago" color="teal.700" />
+                    <Input placeholder="Día de pago" name="diaPago" type="number" value={context.state.formContrato.diaPago} onChange={(e) => context.handleInput(e, 'formContrato')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    
+                    <Text w="80px" color="teal.700">Estatus:</Text>
+                    <Select color="teal.700" name="estatus" onChange={(e)=>handleChange(e)} value={context.state.formContrato.estatus}>
+                      <option value="Activo" >Activo</option>
+                      <option value="Dacion" >Dación</option>
+                      <option value="Quebranto" >Quebranto</option>
+                      <option value="Siniestro" >Siniestro</option>
+                      <option value="Terminado" >Terminado</option>
                     </Select>
-        
                     <Button type="submit" minWidth="150px" alignSelf="center" w="30%" backgroundColor="teal.300" color="teal.50" size="md">
                       Guardar
                     </Button>
@@ -139,7 +164,7 @@ export default function Contratos({history}) {
                             <Text >{contract.tasa}</Text>
                             <Text>{contract.mensualidad}</Text>
                             <Text >{contract.fechaPrimerPago}</Text>
-                            <Link onClick={(e)=>{showEdit(e,contract)} }><Box margin="auto" as={FaPlusCircle}/></Link>
+                            <Link onClick={(e)=>{showDetail(e,contract)} }><Box margin="auto" as={FaPlusCircle}/></Link>
                             <Link onClick={(e)=>{showEdit(e,contract)} }><Box margin="auto" as={MdEdit}/></Link>
                             <Link onClick={(e)=>{deleteContract(e,contract._id)} }><Icon margin="auto" name="delete"/></Link>
                           </SimpleGrid>

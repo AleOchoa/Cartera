@@ -1,6 +1,11 @@
-import React from 'react'
+import React,{useContext,useEffect} from 'react'
+import {MyContext} from '../../context'
 
-export default function Clientes() {
+export default function Clientes({history}) {
+    useEffect(()=>{
+        if (!context.state.isLogged) return history.push('/')
+      })
+    const context = useContext(MyContext)
     return (
         <div>
             <h1>Clientes</h1>

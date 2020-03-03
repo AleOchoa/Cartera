@@ -30,6 +30,7 @@ function Navbar({ history }) {
             backgroundColor="teal.300"
           >
             <Image h="9vh"  src="/logo_blanco.webp" />
+            {context.state.isLogged && (
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -41,21 +42,23 @@ function Navbar({ history }) {
                 border="none"
               ></MenuButton>
               <MenuList>
-                {!context.state.isLogged && (
-                  <>
-                    <MenuItem onClick={() => go('/')}>Login</MenuItem>
-                    <MenuItem onClick={() => go('/signup')}>Signup</MenuItem>
-                  </>
-                )}
-                {context.state.isLogged && (
+                {context.state.isAdmin && (
                   <>
                     <MenuItem onClick={() => go('/usuarios')}>Usuarios</MenuItem>
+                    <MenuItem onClick={() => go('/clientes')}>Clientes</MenuItem>
+                    <MenuItem onClick={() => go('/contratos')}>Contratos</MenuItem>
+                    <MenuItem onClick={context.handleLogout}>Logout</MenuItem>
+                  </>
+                )}
+                {!context.state.isAdmin && (
+                  <>
+                    <MenuItem onClick={() => go('/clientes')}>Clientes</MenuItem>
                     <MenuItem onClick={() => go('/contratos')}>Contratos</MenuItem>
                     <MenuItem onClick={context.handleLogout}>Logout</MenuItem>
                   </>
                 )}
               </MenuList>
-            </Menu>
+            </Menu>)}
           </Flex>
         )
       }}
