@@ -31,8 +31,33 @@ class MyProvider extends Component {
       email:"",
       rol:""
     },
-    formConrtato: null,
-    cliente: null,
+    formContrato: {
+      idcliente:"",
+      monto:0,
+    plazo:0,
+    tasa:0,
+    cliente:"",
+    fechaInicio:"",
+    diaPago:0,
+    estatus:""
+    },
+    formCliente:{
+      nombre:"",
+      apellidoPaterno:"",
+      apellidoMaterno:"",
+      RFC:"",
+      fechaNacimiento:"",
+      genero:"",
+      CURP:"",
+      calle:"",
+      ext:"",
+      int:"",
+      colonia:"",
+      delegacion:"",
+      ciudad:"",
+      estado:"",
+      cp:""
+    },
     allUsers: null,
     allContracts: null,
     allClients: null,
@@ -140,6 +165,81 @@ class MyProvider extends Component {
       isLogged: false
     })
   }
+  createContract=async e =>{
+    e.preventDefault()
+    const form=this.state.formConrtato
+    this.setState({
+        formConrtato:{
+        idCliente:"",
+        monto:"",
+        plazo:"",
+        tasa:"",
+        cliente:"",
+        fechaInicio:"",
+        diaPago:"",
+        estatus:""
+      },
+      nuevo:false
+    })
+    return await SERVICE.createContract(form)
+      .then(async ({data})=>{
+        const {contracts}=await SERVICE.feedContracts()
+        this.setState({allContracts: contracts})
+        return {
+          contract: data.contract,
+          msg: "Se ha creado el contrato."
+        }
+      })
+      .catch(({
+        err
+      }) => {
+        return {
+          contract: null,
+          msg: err
+        }
+      })
+  }
+  createContract = async e=>{
+    e.preventDefault()
+    const form=this.state.formContrato
+    this.setState({
+      formContrato: {
+        idcliente:"",
+        monto:"",
+        plazo:"",
+        tasa:"",
+        cliente:"",
+        fechaInicio:"",
+        diaPago:"",
+        estatus:""
+      },
+      nuevo:false
+    })
+    return await SERVICE.createContract(form)
+      .then(async (
+        data
+      ) => {
+        const {
+          contracts
+        } = await SERVICE.feedContracts()
+        this.setState({
+          allContracts: contracts
+        })
+        const contrato=data.contrato.data.contrato
+        return {
+          contract: contrato,
+          msg: "Se ha generado el contrato."
+        }
+      })
+      .catch(({
+        err
+      }) => {
+        return {
+          contract: null,
+          msg: "No se pudo crear el contrato."
+        }
+      })
+  }
 
   handleSignupSubmit = async e => {
     e.preventDefault()
@@ -228,7 +328,8 @@ class MyProvider extends Component {
       editUser,
       showEditUser,
       handleChange,
-      showNuevo
+      showNuevo,
+      createContract
     } = this
     return ( <MyContext.Provider value = {
       {
@@ -244,7 +345,8 @@ class MyProvider extends Component {
         editUser,
         showEditUser,
         handleChange,
-        showNuevo
+        showNuevo,
+        createContract
       }
     } > {
       this.props.children

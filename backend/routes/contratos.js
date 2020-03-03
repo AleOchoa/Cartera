@@ -3,19 +3,19 @@ const Contract= require('../models/Contract')
 const Client = require('../models/Client')
 
 router.get('/',async (req,res)=>{
-        const contratos= await Contract.find()
+        const contratos= await Contract.find().populate('cliente')
         res.status(200).json({contratos})
     })
     .post('/crea',async(req,res)=>{
-        const {idCliente,monto,plazo,tasa,fechaInicio,diaPago} =req.body
+        const {idcliente,monto,plazo,tasa,fechaInicio,diaPago}=req.body
         const tabla= creaTabla(monto,plazo,tasa,fechaInicio,diaPago)
-        const cliente= await Client.findOne({_id:idCliente})
+        const cliente= await Client.findOne({_id:idcliente})
         const numeroContrato=`${cliente.numCliente}-CS-${cliente.numContratos+1}`
         cliente.numContratos+=1
         cliente.save()
         const contrato= await Contract.create({monto,plazo,tasa,
             numeroContrato,tablaOriginal:tabla,tablaActual:tabla,
-            fechaInicio,diaPago,cliente:idCliente})
+            fechaInicio,diaPago,cliente:idcliente})
         res.status(201).json({ contrato })
     })
 

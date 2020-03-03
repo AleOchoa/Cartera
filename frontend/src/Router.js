@@ -5,6 +5,8 @@ import Usuarios from './pages/admin/Usuarios'
 import NotFound from './components/404/NotFound.js';
 import Navbar from './components/Navbar';
 import {Box} from "@chakra-ui/core";
+import Contratos from './pages/mesa/Contratos';
+import Clientes from './pages/mesa/Clientes'
 const Router = () => (
   <>
   <Navbar />
@@ -12,6 +14,8 @@ const Router = () => (
     <Switch>
       <Route exact path="/" component={Login} />
       <Route exact path="/usuarios" component={Usuarios} />
+      <Route exact path="/contratos" component={Contratos} />
+      <Route exact path="/clientes" component={Clientes}/>
       <Route component={NotFound} />
     </Switch>
   </>

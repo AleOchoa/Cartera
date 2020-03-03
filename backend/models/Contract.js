@@ -16,7 +16,14 @@ const contractSchema = new Schema(
       ref: 'Client'
     },
     fechaInicio:Date,
-    diaPago:Number
+    fechaPrimerPago:Date,
+    diaPago:Number,
+    estatus:{
+      type:String,
+      enum:["Activo","Terminado","Quebranto","Dación","Siniestro"],
+      default:"Activo"
+    },
+    mensualidad:Number
   },
   {
     timestamps: true,

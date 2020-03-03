@@ -59,7 +59,7 @@ export default function Usuarios({history}) {
           {context => {
             return (
               <Flex wrap="wrap" justifyContent="center">
-              {!nuevo && <Button marginTop="15px" onClick={showNuevo} minWidth="150px" alignSelf="center" w="30%" backgroundColor="teal.300" color="teal.50" size="md">
+              {!nuevo && !edita && <Button marginTop="15px" onClick={showNuevo} width="120px" alignSelf="center" backgroundColor="teal.300" color="teal.50" size="md">
                       Nuevo usuario
                     </Button>}
                 {nuevo && <Box as="form" onSubmit={submitUser} display="flex" h="60%" justifyContent="center" minWidth="350px" w="25vw"  p={4} color="white">

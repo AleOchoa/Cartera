@@ -10,16 +10,11 @@ const clientSchema = new Schema(
         default:0
     },
     numCliente:String,
-    calificacion:{
-        type:String,
-        default:"NUEVO",
-        enum:["NUEVO","DEUDOR","PAGADOR"]
-    },
     RFC:String,
     fechaNacimiento:Date,
     genero:{
       type:String,
-      enum:["MASCULINO","FEMENINO","INDEFINIDO"]
+      enum:["Masculino","Femenino","Indefinido"]
     },
     CURP:String,
     direccion:{

@@ -49,6 +49,10 @@ const MY_SERVICE = {
   changeStatus:async (id)=>{
     const user=await service.patch(`/cambiaEstatus/${id}`)
     return{user}
+  },
+  createContract:async (form)=>{
+    const contrato=await service.post('/contrato/crea',form)
+    return{contrato}
   }
 };
 

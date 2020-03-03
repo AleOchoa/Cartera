@@ -49,8 +49,8 @@ function Navbar({ history }) {
                 )}
                 {context.state.isLogged && (
                   <>
-                    <MenuItem onClick={() => go('/create')}>Create</MenuItem>
-                    <MenuItem onClick={() => go('/profile')}>Profile</MenuItem>
+                    <MenuItem onClick={() => go('/usuarios')}>Usuarios</MenuItem>
+                    <MenuItem onClick={() => go('/contratos')}>Contratos</MenuItem>
                     <MenuItem onClick={context.handleLogout}>Logout</MenuItem>
                   </>
                 )}
