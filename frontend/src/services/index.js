@@ -64,6 +64,19 @@ const MY_SERVICE = {
   deleteContract:async (id)=>{
     const msg=await service.delete(`/contrato/borra/${id}`)
     return {msg}
+  },
+//CRUD Cliente
+  createClient:async (form)=>{
+    const client=await service.post('/cliente/crea',form)
+    return{cliente:client.data.cliente}
+  },
+  editClient:async (id,form) => {
+    const cliente=await service.patch(`/cliente/edita/${id}`,form)
+    return {cliente}
+  },
+  deleteClient:async (id)=>{
+    const msg=await service.delete(`/cliente/borra/${id}`)
+    return {msg}
   }
 
 };

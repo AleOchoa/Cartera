@@ -3,7 +3,7 @@ const Contract= require('../models/Contract')
 const Client = require('../models/Client')
 
 router.get('/',async (req,res)=>{
-        const contratos= await Contract.find().populate('cliente')
+        const contratos= await Contract.find().populate('cliente').sort({createdAt:-1})
         res.status(200).json({contratos})
     })
     .post('/crea',async(req,res)=>{

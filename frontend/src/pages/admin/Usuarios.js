@@ -23,7 +23,6 @@ export default function Usuarios({history}) {
                 duration: 4000,
                 isClosable: true,
               })
-          history.push('/usuarios')
         } else {
           toast({
             position:"top-left",

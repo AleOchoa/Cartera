@@ -4,7 +4,7 @@ const passport = require('../config/passport');
 const {confirmAccount}=require('../config/nodemailer')
 
 router.get('/usuarios',async(req,res)=>{
-  const users=await User.find()
+  const users=await User.find().sort({createdAt:-1})
   res.status(200).json({users})
 })
 router.delete('/borraUsuario/:id',async (req,res)=>{

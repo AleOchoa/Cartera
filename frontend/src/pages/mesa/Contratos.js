@@ -22,7 +22,6 @@ export default function Contratos({history}) {
                 duration: 4000,
                 isClosable: true,
               })
-          history.push('/contratos')
         } else {
           toast({
             position:"top",
@@ -100,7 +99,7 @@ export default function Contratos({history}) {
                 </Box>}
                 {edita && <Box as="form" onSubmit={(e)=>editContract(e,context.state.formContrato.id)} display="flex" h="60%" justifyContent="center" minWidth="350px" w="25vw"  p={4} color="white">
                 <Stack >
-                    <Heading as="h3" size="md" color="teal.700">Agrega un contrato</Heading>
+                    <Heading as="h3" size="md" color="teal.700">Editar</Heading>
 
                     <InputGroup>
                     <InputLeftAddon w="120px" backgroundColor="teal.100" children="Monto" color="teal.700" />

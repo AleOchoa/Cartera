@@ -35,20 +35,22 @@ class MyProvider extends Component {
       id:"",
       idcliente:"",
       monto:0,
-    plazo:0,
-    tasa:0,
-    fechaInicio:"",
-    diaPago:0,
-    estatus:""
+      plazo:0,
+      tasa:0,
+      fechaInicio:"",
+      diaPago:0,
+      estatus:""
     },
     formCliente:{
+      id:"",
+      numCliente:"",
       nombre:"",
       apellidoPaterno:"",
       apellidoMaterno:"",
-      RFC:"",
+      rfc:"",
       fechaNacimiento:"",
       genero:"",
-      CURP:"",
+      curp:"",
       calle:"",
       ext:"",
       int:"",
@@ -242,16 +244,18 @@ class MyProvider extends Component {
 ///Cliente
   createClient=async e =>{
     e.preventDefault()
-    const form=this.state.formConrtato
+    const form=this.state.formCliente
     this.setState({
       formCliente:{
+        id:"",
         nombre:"",
         apellidoPaterno:"",
         apellidoMaterno:"",
-        RFC:"",
+        rfc:"",
         fechaNacimiento:"",
+        numCliente:"",
         genero:"",
-        CURP:"",
+        curp:"",
         calle:"",
         ext:"",
         int:"",
@@ -264,11 +268,11 @@ class MyProvider extends Component {
       nuevo:false
     })
     return await SERVICE.createClient(form)
-      .then(async ({data})=>{
+      .then(async (data)=>{
         const {clients}=await SERVICE.feedClients()
         this.setState({allClients: clients})
         return {
-          client: data.client,
+          client: data.cliente,
           msg: "Se ha agregado el cliente."
         }
       })
@@ -280,7 +284,59 @@ class MyProvider extends Component {
           msg: err
         }
       })
-  }
+    }
+    showEditClient= async(e,cliente) => {
+      const form={
+        id:cliente._id,
+        nombre:cliente.nombre,
+        apellidoPaterno:cliente.apellidoPaterno,
+        apellidoMaterno:cliente.apellidoMaterno,
+        rfc:cliente.rfc,
+        numCliente:cliente.numCliente,
+        genero:cliente.genero,
+        curp:cliente.curp,
+      }
+      this.setState({
+        edita: true,
+        formCliente:form
+      })
+    }
+    deleteClient = async (e, id) => {
+      await SERVICE.deleteClient(id)
+      const data = await SERVICE.feedClients()
+      this.setState({
+        allClients: data.clients
+      })
+    }
+    editClient = async (e, id) => {
+      e.preventDefault()
+      await SERVICE.editClient(id,this.state.formCliente)
+      const data = await SERVICE.feedClients()
+      const form= {
+        id:"",
+        numCliente:"",
+        nombre:"",
+        apellidoPaterno:"",
+        apellidoMaterno:"",
+        rfc:"",
+        fechaNacimiento:"",
+        genero:"",
+        curp:"",
+        calle:"",
+        ext:"",
+        int:"",
+        colonia:"",
+        delegacion:"",
+        ciudad:"",
+        estado:"",
+        cp:""
+      }
+      this.setState({
+        formCliente:form,
+        edita: false,
+        allClients: data.clients
+      })
+    }
 
 ///Contrato
   createContract = async e=>{
@@ -370,6 +426,7 @@ class MyProvider extends Component {
   showDetailContract= (e,contract)=>{
 
   }
+  
 
   render() {
     const {
@@ -390,7 +447,11 @@ class MyProvider extends Component {
       showEditContract,
       deleteContract,
       editContract,
-      showDetailContract
+      showDetailContract,
+      createClient,
+      showEditClient,
+      deleteClient,
+      editClient
     } = this
     return ( <MyContext.Provider value = {
       {
@@ -409,9 +470,13 @@ class MyProvider extends Component {
         showNuevo,
         createContract,
         showEditContract,
-      deleteContract,
-      editContract,
-      showDetailContract
+        deleteContract,
+        editContract,
+        showDetailContract,
+        createClient,
+        showEditClient,
+        deleteClient,
+        editClient
       }
     } > {
       this.props.children
