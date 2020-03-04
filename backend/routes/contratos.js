@@ -34,7 +34,7 @@ router.get('/',async (req,res)=>{
         const contrato= await Contract.findById(id)
         const fecha=contrato.fechaInicio.toISOString().substring(0,10)
         const tabla= creaTabla(monto,plazo,tasa,fecha,diaPago)
-        const contract= await Contract.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla},{new:true})
+        const contract= await Contract.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla,mensualidad:tabla[0].mensualidad,fechaPrimerPago:tabla[0].fechaExigibilidad},{new:true})
           .catch(err=>res.status(500).json(err))
         res.status(200).json({contract})
       })
@@ -61,9 +61,9 @@ function creaTabla(monto,plazo,tasa,fechaInicio,diaPago){
             interes:Math.round(100*saldoinicial*((tasa/100)/PeriodicidadPlan))/100,
             mensualidad:Mensualidad
         }
-        detalle.ivaInteres=detalle.interes*IvaRegimen
-        detalle.capital=Mensualidad-detalle.interes-detalle.ivaInteres
-        detalle.saldoFinal=saldoinicial-detalle.capital
+        detalle.ivaInteres=Math.round(detalle.interes*IvaRegimen*100)/100
+        detalle.capital=Math.round((Mensualidad-detalle.interes-detalle.ivaInteres)*100)/100
+        detalle.saldoFinal=Math.round((saldoinicial-detalle.capital)*100)/100
         saldoinicial=detalle.saldoFinal
         tabla.push(detalle)
     }

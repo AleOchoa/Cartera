@@ -1,10 +1,10 @@
 import React, {useContext,useEffect} from 'react';
-import {Select,Link,List,ListItem,Flex,Box,Heading,Button,Stack,Input,Icon,useToast, SimpleGrid,Text,InputLeftAddon, InputGroup } from "@chakra-ui/core";
+import {List,ListItem,Flex,Box,Heading, SimpleGrid,Text } from "@chakra-ui/core";
 import {MyContext} from '../../context'
 
 export default function DetalleContrato({history}) {  
     const context = useContext(MyContext)
-    const toast = useToast()
+    const {feed}= context.state
     useEffect(()=>{
       if (!context.state.isLogged) return history.push('/')
     })
@@ -14,7 +14,7 @@ export default function DetalleContrato({history}) {
           {context => {
             return (
               <Flex wrap="wrap" justifyContent="center">
-                <Box display="flex" flexDir="column"  h="80%" justifyContent="center" minWidth="400px"  maxWidth="9500px" p={4} color="white">
+                {feed && <Box display="flex" flexDir="column"  h="80%" justifyContent="center" minWidth="400px"  maxWidth="9500px" p={4} color="white">
                   <Heading as="h3" size="md" color="teal.700">Detalle Contrato</Heading>
                   <List>
                     <ListItem
@@ -74,7 +74,7 @@ export default function DetalleContrato({history}) {
                     </ListItem>
                     ))}
                   </List>
-                </Box>  
+                </Box>}  
               </Flex>
             );
           }}

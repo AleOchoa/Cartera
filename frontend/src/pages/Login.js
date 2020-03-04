@@ -9,7 +9,7 @@ export default function Login({ history }) {
   const submit = async (e) => {
     const { user, msg } = await context.handleLoginSubmit(e)
     if (user) {
-      history.push('/usuarios')
+      history.push('/contratos')
     } else {
       toast({
         title: 'Revisa tus credenciales.',

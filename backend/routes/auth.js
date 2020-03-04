@@ -43,8 +43,22 @@ router.post('/signup', async (req, res, next) => {
    await User.register({name,email,token}, password)
     .then(async (user) =>{ 
       const endpoint = `https://localhost:3001/${token}`
-      await confirmAccount(email,password,name).catch(err=>console.log(err)
-      )
+      await confirmAccount(email,password,name).catch(async err=>{console.log(err)
+        const newPassword="Em1$ha"
+        await User.findByUsername(email).then(async (changeUser)=>{
+          if (changeUser){
+              await changeUser.setPassword(newPassword)
+              .then(user=>{
+                changeUser.save();
+                res.status(201).json({ user })
+              })
+              .catch(err=>res.status(500).json({err}));
+          } else {
+              res.status(500).json({err});
+          }
+        })
+        
+      })
       res.status(201).json({ user })})
     .catch((err) => res.status(500).json({ err }));
 });
