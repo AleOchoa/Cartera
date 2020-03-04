@@ -89,18 +89,48 @@ export default function Clientes({history}) {
                       <option value="Femenino">Femenino</option>
                       <option value="Masculino">Masculino</option>
                       <option value="Indefinido">Indefinido</option>
-                      })
-                      }
+                  
                     </Select>
                     <Button type="submit" minWidth="150px" alignSelf="center" w="30%" backgroundColor="teal.300" color="teal.50" size="md">
                       Crear cliente
                     </Button>
                   </Stack>
                 </Box>}
-                {edita && <Box as="form" onSubmit={(e)=>editClient(e,context.state.formContrato.id)} display="flex" h="60%" justifyContent="center" minWidth="350px" w="25vw"  p={4} color="white">
+                {edita && <Box as="form" onSubmit={(e)=>editClient(e,context.state.formCliente.id)} display="flex" h="60%" justifyContent="center" minWidth="350px" w="25vw"  p={4} color="white">
                 <Stack >
                     <Heading as="h3" size="md" color="teal.700">Editar</Heading>
                     
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Nombre" color="teal.700" />
+                    <Input placeholder="Nombre" name="nombre" type="text" value={context.state.formCliente.nombre} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Ap. Paterno" color="teal.700" />
+                    <Input placeholder="Apellido Paterno" name="apellidoPaterno" type="text" value={context.state.formCliente.apellidoPaterno} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="Ap. Materno" color="teal.700" />
+                    <Input placeholder="Apellido Materno" name="apellidoMaterno" type="text" value={context.state.formCliente.apellidoMaterno} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="RFC" color="teal.700" />
+                    <Input placeholder="RFC" name="rfc" type="text" value={context.state.formCliente.rfc} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="CURP" color="teal.700" />
+                    <Input placeholder="CURP" name="curp" type="text" value={context.state.formCliente.curp} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <InputGroup>
+                    <InputLeftAddon w="120px" backgroundColor="teal.100" children="No. Cliente" color="teal.700" />
+                    <Input placeholder="Número de cliente" name="numCliente" type="text" value={context.state.formCliente.numCliente} onChange={(e) => context.handleInput(e, 'formCliente')} color="teal.700" rounded="2" isRequired/>
+                    </InputGroup>
+                    <Select color="teal.700" name="genero" value={context.state.formCliente.genero} onChange={(e)=>handleChange(e)}>
+                      <option >Selecciona tu género</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Indefinido">Indefinido</option>
+                    </Select>
+
                     <Button type="submit" minWidth="150px" alignSelf="center" w="30%" backgroundColor="teal.300" color="teal.50" size="md">
                       Guardar
                     </Button>

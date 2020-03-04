@@ -30,7 +30,7 @@ router.get('/',async (req,res)=>{
         const contrato= await Contract.findById(id)
         const fecha=contrato.fechaInicio.toISOString().substring(0,10)
         const tabla= creaTabla(monto,plazo,tasa,fecha,diaPago)
-        const contract= await Contract.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla,},{new:true})
+        const contract= await Contract.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla},{new:true})
           .catch(err=>res.status(500).json(err))
         res.status(200).json({contract})
       })

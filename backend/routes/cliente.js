@@ -12,13 +12,18 @@ router.get('/',async (req,res)=>{
     })
     .delete('/borra/:id',async (req,res)=>{
         const {id}=req.params
-        await Client.findByIdAndDelete(id)
-        res.status(200).json({msg:"Cliente borrado."})
+        const cliente=await Client.findById(id)
+        if (cliente.numContratos>0){
+            res.status(500).json({msg:"No se puede borrar el cliente."})    
+        }
+        else{ 
+            await Client.findByIdAndDelete(id)
+        res.status(200).json({msg:"Cliente borrado."})}
       })
     .patch('/edita/:id', async (req,res)=>{
-        const {monto,plazo,tasa,diaPago,estatus}=req.body
+        const {nombre,apellidoPaterno,apellidoMaterno,rfc,curp,genero,numCliente}=req.body
         const {id}=req.params
-        const client= await Client.findByIdAndUpdate(id,{monto,plazo,tasa,diaPago,estatus,tablaOriginal:tabla,tablaActual:tabla,},{new:true})
+        const client= await Client.findByIdAndUpdate(id,{nombre,apellidoPaterno,apellidoMaterno,rfc,curp,genero,numCliente},{new:true})
           .catch(err=>res.status(500).json(err))
         res.status(200).json({client})
       })
