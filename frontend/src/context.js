@@ -64,6 +64,8 @@ class MyProvider extends Component {
     allContracts: null,
     allClients: null,
     feed: false,
+    isAdmin:false,
+    contratoDetalle:null
   }
 
   handleInput = (e, obj) => {
@@ -164,7 +166,8 @@ class MyProvider extends Component {
     this.props.history.push('/')
     this.setState({
       loggedUser: null,
-      isLogged: false
+      isLogged: false,
+      isAdmin:false
     })
   }
   handleSignupSubmit = async e => {
@@ -209,14 +212,21 @@ class MyProvider extends Component {
       .then(({
         data
       }) => {
-        this.setState({
-          loggedUser: data.user,
-          isLogged: true
-        })
+        if (data.user.isActive) {
+          this.setState({
+            loggedUser: data.user,
+            isLogged: true
+          })
+          if (data.user.rol==='Admin') {this.setState({isAdmin:true})}
+          return {
+            user: data.user,
+            msg: 'Login realizado.'
+        }}
+        else {
         return {
-          user: data.user,
-          msg: 'Login realizado'
-        }
+          user: null,
+          msg: 'Usuario inactivo.'
+        }}
       })
       .catch(err => {
         this.setState({
@@ -424,7 +434,11 @@ class MyProvider extends Component {
     })
   }
   showDetailContract= (e,contract)=>{
+    const fechaCorta=contract.fechaPrimerPago.substring(0,10)
+    this.setState({contratoDetalle:{...contract,fechaPrimerPagoCorto:fechaCorta}})
+    console.log(contract)
 
+    this.props.history.push('/detalleContrato')
   }
   
 

@@ -144,7 +144,6 @@ export default function Contratos({history}) {
                         <Text >Plazo</Text>
                         <Text >Tasa</Text>
                         <Text >Mensualidad</Text>
-                        <Text >Primer Pago</Text>
                         <Text >Detalle</Text>
                         <Text >Editar</Text>
                         <Text >Borrar</Text>
@@ -162,7 +161,6 @@ export default function Contratos({history}) {
                             <Text >{contract.plazo}</Text>
                             <Text >{contract.tasa}</Text>
                             <Text>{contract.mensualidad}</Text>
-                            <Text >{contract.fechaPrimerPago}</Text>
                             <Link onClick={(e)=>{showDetail(e,contract)} }><Box margin="auto" as={FaPlusCircle}/></Link>
                             <Link onClick={(e)=>{showEdit(e,contract)} }><Box margin="auto" as={MdEdit}/></Link>
                             <Link onClick={(e)=>{deleteContract(e,contract._id)} }><Icon margin="auto" name="delete"/></Link>

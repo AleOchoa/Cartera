@@ -6,6 +6,10 @@ router.get('/',async (req,res)=>{
         const contratos= await Contract.find().populate('cliente').sort({createdAt:-1})
         res.status(200).json({contratos})
     })
+    .get('/:id',async(req,res)=>{
+        const contrato= await Contract.findById(id).populate('cliente')
+        res.status(200).json({contrato})
+    })
     .post('/crea',async(req,res)=>{
         const {idcliente,monto,plazo,tasa,fechaInicio,diaPago}=req.body
         const tabla= creaTabla(monto,plazo,tasa,fechaInicio,diaPago)
@@ -15,7 +19,7 @@ router.get('/',async (req,res)=>{
         cliente.save()
         const contrato= await Contract.create({monto,plazo,tasa,
             numeroContrato,tablaOriginal:tabla,tablaActual:tabla,
-            fechaInicio,diaPago,cliente:idcliente})
+            fechaInicio,diaPago,cliente:idcliente,mensualidad:tabla[0].mensualidad,fechaPrimerPago:tabla[0].fechaExigibilidad})
         res.status(201).json({ contrato })
     })
     .delete('/borra/:id',async (req,res)=>{
