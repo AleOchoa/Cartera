@@ -34,7 +34,7 @@ export default function Login({ history }) {
                 </InputGroup>
                 <InputGroup>
                   <InputLeftAddon backgroundColor="teal.100" children={<Icon name="lock" color="teal.700" />} />
-                  <Input name="password" value={context.state.formLogin.password} onChange={(e) => context.handleInput(e, 'formLogin')} color="teal.700" type="password" rounded="0" placeholder="password" isRequired/>
+                  <Input name="password" value={context.state.formLogin.password} onChange={(e) => context.handleInput(e, 'formLogin')} color="teal.700" type="password" rounded="0" placeholder="contraseña" isRequired/>
                 </InputGroup>
                 <br />
                 <Button type="submit" minWidth="150px" alignSelf="center" w="30%" backgroundColor="teal.300" color="teal.50" size="md">

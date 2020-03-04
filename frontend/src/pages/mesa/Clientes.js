@@ -52,7 +52,7 @@ export default function Clientes({history}) {
         <MyContext.Consumer>
           {context => {
             return (
-              <Flex wrap="wrap" justifyContent="center">
+              <Flex wrap="wrap" direction="column" justifyContent="center">
               {!nuevo && !edita && <Button marginTop="15px" onClick={showNuevo} width="170px" alignSelf="center" backgroundColor="teal.300" color="teal.50" size="md">
                       Agregar cliente
                     </Button>}

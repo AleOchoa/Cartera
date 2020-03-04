@@ -56,7 +56,7 @@ export default function Contratos({history}) {
         <MyContext.Consumer>
           {context => {
             return (
-              <Flex wrap="wrap" justifyContent="center">
+              <Flex wrap="wrap" direction="column" justifyContent="center">
               {!nuevo && !edita && <Button marginTop="15px" onClick={showNuevo} width="170px" alignSelf="center" backgroundColor="teal.300" color="teal.50" size="md">
                       Agregar contrato
                     </Button>}
@@ -67,7 +67,7 @@ export default function Contratos({history}) {
                     <Select color="teal.700" name="idcliente" onChange={(e)=>handleChange(e)}>
                       <option >Selecciona un cliente</option>
                       {context.state.allClients.map((cliente,indx)=>{
-                          return <option key={indx} value={cliente._id}>{cliente.nombre} {cliente.apellidoPaterrno} {cliente.apellidoMaterno}</option>
+                          return <option key={indx} value={cliente._id}>{cliente.nombre} {cliente.apellidoPaterno} {cliente.apellidoMaterno}</option>
                       })
                       }
                     </Select>
