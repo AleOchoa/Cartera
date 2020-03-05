@@ -10,13 +10,25 @@ Puedes acceder a la plataforma dando click en [Cartera](https://carteraemisha.ne
 
 Es una plataforma para uso interno por lo que no hay una página en la que te puedas registrar. Pero no te preocupes aquí te compartimos unos perfiles con los que podrás hacer pruebas:
 
-Email: alejandra.ochoa@emisha.com.mx
-Contraseña: E8DU0cHPgr
+1) Email:  jgarciaj@emisha.com.mx
+
+Contraseña: O8qLf1BGuC
+
 Rol: Admin
 
-Email: alejandra_of1@hotmail.com
-Password: pmaLooOSKT
+2) Email:  acontreras@emisha.com.mx
+
+Contraseña: jojUmog1UV
+
 Rol: Mesa
+
+
+3) Email:  pacosta@emisha.com.mx
+
+Contraseña: CD5YX9Bmkz
+
+Rol: Mesa
+
 
 Por el momento solo hay dos roles: Admin y Mesa. Ambos pueden crear y editar clientes, crear y editar contratos y ver detalle de contratos. El Admin es el único que puede crear, editar y/o bloquear usuarios. Al crear usuarios nuevos se les envía un correo electrónico con la contraseña que se genera de manera aleatoria por lo que se deben ingresar correos válidos. Si hay alguna falla con el sistema de envío de correos se les asigna a los usuarios la contraseña "Em1$ha, por lo que si no recibes el correo y si lo ingresaste adecuadamente puedes intentar usar esta contraseña.
 
