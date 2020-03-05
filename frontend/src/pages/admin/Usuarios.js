@@ -60,7 +60,7 @@ export default function Usuarios({history}) {
         <MyContext.Consumer>
           {context => {
             return (
-              <Flex wrap="wrap" justifyContent="center">
+              <Flex direction="column" alignItems="center" justifyContent="center">
               {!nuevo && !edita && <Button marginTop="15px" onClick={showNuevo} width="120px" alignSelf="center" backgroundColor="teal.300" color="teal.50" size="md">
                       Nuevo usuario
                     </Button>}

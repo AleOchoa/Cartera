@@ -21,23 +21,25 @@ export default function DetalleContrato({history}) {
                           color="teal.700"
                         >
                       <SimpleGrid columns={11}>
-                        <Text >No. Contrato</Text>
+                        <Text gridColumn="1/3">No. Contrato</Text>
                         <Text gridColumn="3/5" >Cliente</Text>
                         <Text >Monto</Text>
                         <Text >Plazo</Text>
                         <Text >Tasa</Text>
-                        <Text gridColumn="9/10">Mensualidad</Text>
+                        <Text >Estatus</Text>
+                        <Text gridColumn="9/11">Mensualidad</Text>
                         <Text >Primer Pago</Text>
                       </SimpleGrid>
                     </ListItem>
                         <ListItem color="teal.700">
                       <SimpleGrid columns={11}>
-                        <Text >{contract.numeroContrato}</Text>
+                        <Text gridColumn="1/3">{contract.numeroContrato}</Text>
                         <Text gridColumn="3/5" isTruncated >{contract.cliente.nombre} {contract.cliente.apellidoPaterno} {contract.cliente.apellidoMaterno}</Text>
                         <Text >{contract.monto}</Text>
                         <Text >{contract.plazo}</Text>
                         <Text >{contract.tasa}</Text>
-                        <Text gridColumn="9/10">{contract.mensualidad}</Text>
+                        <Text >{contract.estatus}</Text>
+                        <Text gridColumn="9/11">{contract.mensualidad}</Text>
                         <Text >{contract.fechaPrimerPagoCorto}</Text>
                       </SimpleGrid>
                       </ListItem>
@@ -45,14 +47,14 @@ export default function DetalleContrato({history}) {
                   <Heading as="h4" size="md" color="teal.700">Tabla Amortización</Heading>
                   <List>
                     <ListItem color="teal.700">
-                      <SimpleGrid columns={10}>
+                      <SimpleGrid columns={8}>
                         <Text>Pago</Text>
                         <Text>Fecha Exigibilidad</Text>
                         <Text gridColumn="3/4" >Saldo Inicial</Text>
                         <Text>Capital</Text>
                         <Text>Interés</Text>
                         <Text>Iva Interés</Text>
-                        <Text gridColumn="8/9">Saldo Final</Text>
+                        <Text gridColumn="7/8">Saldo Final</Text>
                         <Text>Mensualidad</Text>
                       </SimpleGrid>
                     </ListItem>
@@ -61,14 +63,14 @@ export default function DetalleContrato({history}) {
                           key={indx}
                           color="teal.700"
                         >
-                      <SimpleGrid columns={10}>
+                      <SimpleGrid columns={8}>
                         <Text>{el.pago}</Text>
                         <Text>{el.fechaExigibilidad}</Text>
-                        <Text gridColumn="3/4" >{el.saldoInicial}</Text>
+                        <Text gridColumn="3/4">{el.saldoInicial}</Text>
                         <Text>{el.capital}</Text>
                         <Text>{el.interes}</Text>
                         <Text>{el.ivaInteres}</Text>
-                        <Text gridColumn="8/9">{el.saldoFinal}</Text>
+                        <Text gridColumn="7/8">{el.saldoFinal}</Text>
                         <Text>{el.mensualidad}</Text>
                       </SimpleGrid>
                     </ListItem>
